@@ -1,0 +1,410 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Mansa Engineering{% endblock %}</title>
+    <!-- Bootstrap Icons CDN -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
+    <style>
+        /* Reset and Base Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            line-height: 1.6;
+            background-color: #e4f5f2; /* Background color */
+            color: #033939; /* Dark text color for readability */
+        }
+
+        header {
+            background-color: #078586; /* Main header color */
+            padding: 10px 15px;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .top-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.9em;
+            color: white; /* White text for top-row links */
+        }
+
+        .top-row div {
+            margin: 5px 0;
+        }
+
+        .branding {
+            text-align: center;
+            margin: 10px 0;
+        }
+
+        .branding h1 {
+            font-size: 1.5em;
+            margin-bottom: 5px;
+            color: white; /* White color for the main title */
+        }
+
+        .branding p {
+            font-size: 1em;
+            color: white; /* White color for subtext */
+        }
+
+        /* Search Bar Styles */
+        .search-bar {
+            background-color: white; /* White background for search bar */
+            padding: 15px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+        }
+
+        .search-bar form {
+            display: flex;
+            max-width: 600px;
+            margin: 0 auto;
+            flex-grow: 1;
+        }
+
+        .search-bar input {
+            flex-grow: 1;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-right: none;
+            border-top-left-radius: 4px;
+            border-bottom-left-radius: 4px;
+        }
+
+        .search-bar button {
+            padding: 10px 15px;
+            background-color: #078586; /* Button color matching the header */
+            color: white;
+            border: 1px solid #078586;
+            border-top-right-radius: 4px;
+            border-bottom-right-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .search-bar button:hover {
+            background-color: #033939; /* Darker color on hover */
+        }
+
+ .logo {
+    position: absolute;
+    top: 45px; /* Adjust this value as needed */
+    left: 5%;
+    transform: translateX(-50%);
+}
+
+.logo img {
+    height: 80px; /* Adjust size as needed */
+}
+
+        .call-icon {
+            margin-left: 20px;
+            cursor: pointer;
+            position: relative;
+        }
+
+        .call-icon:hover::after {
+            content: "Click for consultancy";
+            position: absolute;
+            top: 100%;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: #033939;
+            color: white;
+            padding: 5px;
+            border-radius: 4px;
+            font-size: 0.8em;
+            white-space: nowrap;
+        }
+
+        .menu-icon {
+            margin-left: 20px;
+            cursor: pointer;
+            font-size: 1.5em;
+        }
+
+        .menu {
+            display: none;
+            position: absolute;
+            top: 100px; /* Adjust this based on the search bar height */
+            right: 20px;
+            background-color: white;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            z-index: 1000;
+            width: 200px; /* Set a fixed width for the menu */
+        }
+
+        .menu a {
+            display: block;
+            padding: 10px 20px;
+            color: #033939;
+            text-decoration: none;
+        }
+
+        .menu a:hover {
+            background-color: #f1f1f1;
+        }
+
+        footer {
+            background-color: #033939; /* Footer background color */
+            color: white;
+            padding: 15px;
+            text-align: center;
+            margin-top: 150px;
+            font-size: 0.9em;
+        }
+
+        footer p {
+            margin: 5px 0;
+        }
+
+        footer a {
+            color: #078586; /* Link color matching the header and button */
+            text-decoration: none;
+        }
+
+        footer a:hover {
+            text-decoration: underline;
+        }
+
+        /* Main Categories Styles */
+        .main-categories, .sub-categories, .products {
+            max-width: 1200px;
+            margin: 20px auto;
+            padding: 0 15px;
+        }
+
+        .main-categories h2,
+        .sub-categories h2,
+        .products h2 {
+            text-align: center;
+            margin-bottom: 20px;
+            color: #2c3e50;
+        }
+
+        .main-categories {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 15px;
+        }
+
+        .main-category {
+        background-color: #e4f5f2;
+        border-radius: 8px;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        padding: 5px;
+        text-align: center;
+        width: 25
+        0px;
+        transition: transform 0.3s ease;
+    }
+
+        .main-category:hover {
+            transform: scale(1.05);
+        }
+
+        .main-category a {
+            text-decoration: none;
+            color: #2c3e50;
+        }
+
+        /* Subcategories Styles */
+        .sub-categories {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 15px;
+        }
+
+        .subcategory {
+            background-color: #ffffff;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            transition: transform 0.3s ease;
+        }
+
+        .subcategory:hover {
+            transform: scale(1.05);
+        }
+
+        .subcategory a {
+            text-decoration: none;
+            color: #2c3e50;
+            display: block;
+            text-align: center;
+        }
+
+        .subcategory img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+
+        .subcategory h3 {
+            padding: 10px;
+            background-color: #f8f9fa;
+        }
+
+        /* Products Styles */
+        .products {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 20px;
+        }
+
+        .product {
+            background-color: #ffffff;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            transition: transform 0.3s ease;
+        }
+
+        .product:hover {
+            transform: scale(1.05);
+        }
+
+        .product a {
+            text-decoration: none;
+            color: #2c3e50;
+            display: block;
+        }
+
+        .product img {
+            width: 100%;
+            height: 300px;
+            object-fit: cover;
+        }
+
+        .product p {
+            padding: 10px;
+            text-align: center;
+            background-color: #f8f9fa;
+        }
+
+        /* Responsive Adjustments */
+        @media screen and (max-width: 768px) {
+            .search-bar form {
+                flex-direction: column;
+            }
+
+            .search-bar input,
+            .search-bar button {
+                width: 100%;
+                border-radius: 4px;
+                margin-bottom: 10px;
+            }
+
+            .main-categories,
+            .sub-categories,
+            .products {
+                grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header Section -->
+    <header>
+        <div class="top-row">
+            <div>Phone: 0710789045 | Email: info@mansalaser.com</div>
+            <div>
+                <a href="{% url 'home_page' %}" style="color:white;">Home</a> |
+                <a href="{% url 'home_page' %}" style="color:white;"><i class="bi bi-house-door-fill"></i> Kitchen Collection</a> |
+                <a href="#" style="color:white;"><i class="bi bi-basket-fill"></i> Laundry</a> |
+                <a href="#" style="color:white;"><i class="bi bi-caret-down-fill"></i> Cold Storage</a>
+            </div>
+        </div>
+
+    </header>
+
+    <!-- Search Bar -->
+    <div class="search-bar">
+
+
+        <form method="get" action="{% url 'search_results' %}">
+            <input type="text" name="q" value="{{ query }}" placeholder="Search products...">
+            <button type="submit">Search</button>
+        </form>
+        <div class="call-icon" onclick="window.location.href='https://wa.me/254710789045?text=Hello%20Mansa%20Engineering%2C%20I%20would%20like%20to%20schedule%20an%20onsite%20meeting%20to%20view%20your%20products.'">📞Get Quote</div>
+        <div class="menu-icon" onclick="toggleMenu()">☰</div>
+        <div class="menu" id="menu">
+            <a href="{% url 'home_page' %}">Kitchen Collection</a>
+            {% for category in main_categories %}
+                <a href="{% url 'main_category' category.slug %}">{{ category.name }}</a>
+            {% endfor %}
+        </div>
+    </div>
+
+    {% block content %}
+      <div class="logo">
+            <img src="{% static 'log.png' %}">
+        </div>
+    <!-- Main Categories Section -->
+    <div class="main-categories">
+        {% for category in main_categories %}
+            <div class="main-category">
+                <a href="{% url 'main_category' category.slug %}">
+                    <h3>{{ category.name }}</h3>
+                </a>
+            </div>
+        {% empty %}
+            <p>No main categories available.</p>
+        {% endfor %}
+    </div>
+
+    <!-- Subcategories Section -->
+    <div class="sub-categories">
+        {% for subcategory in sub_categories %}
+            <div class="subcategory">
+                <a href="{% url 'subcategory' subcategory.slug %}">
+                    {% if subcategory.image %}
+                        <img src="{{ subcategory.image.url }}" alt="{{ subcategory.name }}">
+                    {% endif %}
+                    <h3>{{ subcategory.name }}</h3>
+                </a>
+            </div>
+        {% empty %}
+            <p>No subcategories available.</p>
+        {% endfor %}
+    </div>
+    {% endblock %}
+
+    <!-- Footer Section -->
+    <footer>
+        <p>Contacts</p>
+        <p>Donholm, Nairobi, Kenya</p>
+        <p>Phone: 0710789045 | Whatsapp: 0710789045</p>
+        <p>Email: info@mansalaser.com | sales@mansalaser.com</p>
+        <p>©2025 Mansa Engineering Limited ALL RIGHTS RESERVED.</p>
+        <p>Designed & Powered by Black Shepherd Technologies</p>
+    </footer>
+
+    <script>
+        function toggleMenu() {
+            var menu = document.getElementById('menu');
+            if (menu.style.display === 'block') {
+                menu.style.display = 'none';
+            } else {
+                menu.style.display = 'block';
+            }
+        }
+    </script>
+</body>
+</html>
