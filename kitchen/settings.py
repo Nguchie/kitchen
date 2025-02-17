@@ -26,7 +26,7 @@ SECRET_KEY = 'vt)r9(8!vcj9m+j4eqiekto9(+q90c!g5lkto5yek!((62y$u^'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = ['ssnkitchenproducts.com','www.ssnkitchenproducts.com']
 
 
 # Application definition
